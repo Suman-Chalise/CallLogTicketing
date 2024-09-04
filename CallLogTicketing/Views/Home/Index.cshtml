@@ -1,0 +1,149 @@
+﻿@using CallLogTicketing.Enum;
+@using CallLogTicketing.Models
+@model CallLogTicketing.ViewModels.TicketsViewModel
+
+
+
+<div class="container box-shadow" style="background-color:white; border-radius: 5px;">
+    <div class="row m-1">
+        <div class="box-shadow col-6">
+
+            <!-- Create button loading bootstrap   The Ajax code is below for it to load -->
+            <button class="btn btn-success m-2 p-2" style="font-size:18px;" onclick="loadCreateForm()">
+                <i class="bi bi-pencil-square" style="font-size:18px;"></i> Create
+            </button>
+            <!-- create button finishes however it needs form on this page to load which is below -->
+
+
+            <button class="btn btn-outline-dark" style="font-size:18px;"><i class="bi bi-journal-text" style="font-size:18px;"></i> Generate Report</button>
+
+        </div>
+        <div class="col-6">  
+            <input type="text" class="form-control m-2 p-2" placeholder="Search Tickets"/>
+            
+
+        </div>
+
+    </div>
+
+ 
+
+   
+</div>
+<div class="row p-0 box-shadow" style="background-color:white;">
+
+         <div class="border border-1 box-shadow col-3">
+            <div class="header border-bottom border-1">
+                    <div class="p-2"> <strong>Filter Search here</strong></div>
+            </div>
+
+                <form>
+
+                            <div class="form-group">
+                                <label asp-for="Tickets.Project " class="control-label"></label>                                     
+                                <select asp-for="Tickets.Project" class="form-control form-select">
+                                        
+                                    <option>Select..</option>
+                                    @foreach (var item in Model.projectsL)
+                                        {
+                                          <option>@item.Name</option>
+                                         }
+
+                                </select>
+                                <span asp-validation-for="Tickets.Subject" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Tickets.Customer" class="control-label"></label>
+                              <select asp-for="Tickets.Customer" class="form-control form-select">
+                                  <option>Select..</option>
+                                  @foreach (var item in Model.CustomersL)   
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+
+                              </select>
+                                <span asp-validation-for="Tickets.Customer" class="text-danger"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Tickets.Assign" class="control-label"></label>
+                                <select asp-for="Tickets.Assign"  class="form-control form-select">
+                                    <option>Please select....</option>
+                                    @foreach (var item in Model.assignL)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+
+                                </select>
+
+                            </div>
+                                <div class="form-group">
+                                    <label asp-for="Tickets.Status" class="control-label"></label>
+                                    <select asp-for="Tickets.Status" class="form-control form-select" asp-items="Html.GetEnumSelectList<Status>();">
+                                        <option>Please select....</option>
+                                 
+
+                                    </select>
+
+                                </div>
+
+
+
+                            <div class="form-group mt-3">
+                                <input  type="submit" value="Search" class="btn btn-success"/>
+
+                            </div>
+         
+
+
+                </form>
+
+
+            
+         </div>
+
+    <div class="border border-1 box-shadow col-9">
+        <div class="header border-bottom border-1">
+            <div class="p-2"> <strong>Ticket Lists</strong></div>
+        </div>
+           
+        
+        @Html.Partial("_TicketsLists") 
+
+        </div>
+</div>
+
+<!--  Create Bootstrap Below ----------------------------------------------------------------------->
+<div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog  modal-xl">
+        <div class="modal-body">
+        </div>
+    </div>
+</div>
+<!--  Create Bootstrap finishes ------------------------------------------------------------------------->
+
+<script>
+
+    // ------------------------------Below For Ajax Call for Create Modal--------------------- -->
+    function loadCreateForm() {
+
+        $.ajax({
+            url: '/Home/Create',
+            type: 'GET',
+            // data: model,
+            success: function (data) {
+                $('#createModal .modal-body').html(data);
+                $('#createModal').modal('show');
+            }
+        });
+    }
+</script>
+
+<!-- Quick Information About Ajax and bootstrap how it works 
+    just above we have Create Button and it has click event called onclick="loadCreateForm()" which we have created Javascript Ajax call.
+    the function will call on the controller url: '/Home/Create',  and retrive the information and display in to div id="createModal" which is in Index Page.
+    #createModal is connected to Id of Div. 
+    on controller we have call teh partial view, the partial view is _createTicket which will be called from loadCreateform function. 
+    we need some bootstrap as well on that Partial page to load contect. please check the partial view for details
+-->

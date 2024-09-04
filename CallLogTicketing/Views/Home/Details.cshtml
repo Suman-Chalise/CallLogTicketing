@@ -1,0 +1,297 @@
+﻿@using CallLogTicketing.Enum
+@model CallLogTicketing.ViewModels.TicketsViewModel
+
+<div class="container-fluid box-shadow" style="background-color:white; border-radius: 5px;">
+    <div class="row m-1">
+        <div class="box-shadow col-6">
+
+            <!-- Create button loading bootstrap   The Ajax code is below for it to load -->
+            <button class="btn btn-success m-2 p-2" style="font-size:18px;" onclick="loadCreateForm()">
+                <i class="bi bi-pencil-square" style="font-size:18px;"></i> Create
+            </button>
+            <!-- create button finishes however it needs form on this page to load which is below -->
+
+
+            <button class="btn btn-outline-dark" style="font-size:18px;"><i class="bi bi-journal-text" style="font-size:18px;"></i> Generate Report</button>
+
+        </div>
+        <div class="col-6">
+            <input type="text" class="form-control m-2 p-2" placeholder="Search Tickets" />
+
+
+        </div>
+
+    </div>
+
+
+
+</div>
+
+
+
+            <div class="row">
+                <div class="col-md-9">
+                    
+                        <div class="card">
+                             <h5 class="card-header border border-1">
+                                 <div class="row">
+                                    <div class="col-6">@Html.DisplayFor(model => model.Tickets.Subject)</div>
+                                    <div class="col-6">Ticket no - @Html.DisplayFor(model => model.Tickets.Id)</div>
+                                  </div>
+                                      
+                            </h5>
+                           
+                            <div class="card-body">
+                                <h5 class="card-title">Description</h5>
+                                <p class="card-text">
+                                    @Html.DisplayFor(model => model.Tickets.Description)
+                                </p>
+                                
+                            </div>
+                             <div class="card-footer text-body-secondary">
+                                <button onclick="writeNote();">Add Notes</button>
+                                </div>
+
+                               
+
+                        </div>
+                       
+                           <div class="js-input">
+                                
+                           </div>
+                            <div class="js-save">
+                            </div>
+                        
+                   
+@*                        
+                         <div class="card shadow-lg mt-2">
+                            <div class="card-body">
+                            <!-- Button trigger modal -->
+                              <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalForNote">Add Note</button>
+
+                                <!-- Modal -->
+                                 <div class="modal fade" id="modalForNote" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-xl">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                               <p>Not think</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> *@
+                           
+                       
+                        </div> 
+
+
+      
+
+
+
+                <div class="col-md-3 border card p-3">
+                    <div class="form-group shadow-lg bg-light rounded">
+                        <div class="row">
+                               
+                                 <label asp-for="Tickets.Subject" class="control-label mb-0 m-1">
+                                    <i class="bi bi-people" style="font-size:18px;"></i> Subject
+                                 </label>                                
+                                
+                                <div class="col text-dark font-weight-bold m-1">
+                                   <p class="mb-1 border-top"><i class="bi bi-pencil" style="font-size:18px;"></i> @Html.DisplayFor(model => model.Tickets.Subject)</p>
+                                </div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="form-group shadow-lg bg-light rounded mt-2">
+                        <div class="row">
+
+                            <label asp-for="Tickets.Description" class="control-label mb-0 m-1">
+                                <i class="bi bi-people" style="font-size:18px;"></i> Description
+                            </label>
+
+                            <div class="col text-dark font-weight-bold m-1">
+                                <p class="mb-1 border-top"><i class="bi bi-pencil" style="font-size:18px;"></i> @Html.DisplayFor(model => model.Tickets.Description)</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                     <div class="form-group shadow-lg bg-light rounded mt-2">
+                        <div class="row">
+                                <label asp-for="Tickets.TicketTypeId" class="control-label mb-0 m-1">
+                                <i class="bi bi-people" style="font-size:18px;"></i> Ticket Type
+                                </label>
+                                  <div class="col text-dark font-weight-bold m-1">
+
+                               @*      <select asp-for="Tickets.TicketTypeId" class="form-control form-select">
+                                        <option></option>
+                                        @foreach (var item in Model.ticketTypeL)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    </select> *@
+                                    <p class="mb-1 border-top"><i class="bi bi-pencil" style="font-size:18px;"></i> @Html.DisplayFor(model => model.Tickets.TicketType.Name)</p>
+
+                                 </div>
+                        </div>
+                    </div>
+               
+                    <div class="form-group shadow-lg bg-light rounded mt-2">
+                        <div class="row">
+                            <label asp-for="Tickets.Priority" class="control-label mb-0 m-1">
+                                <i class="bi bi-people" style="font-size:18px;"></i> Ticket Priority
+                            </label>
+                            <div class="col text-dark font-weight-bold m-1">
+
+                            <p class="mb-1 border-top"><i class="bi bi-pencil" style="font-size:18px;"></i> @Html.DisplayFor(model => model.Tickets.Priority)</p>
+                                
+
+                            </div>
+                        </div>
+                    </div>
+               
+                    <div class="form-group shadow-lg bg-light rounded mt-2">
+                        <div class="row">
+                            <label asp-for="Tickets.Status" class="control-label mb-0 m-1">
+                                <i class="bi bi-people" style="font-size:18px;"></i> Ticket Status
+                            </label>
+                            <div class="col text-dark font-weight-bold m-1">
+
+                                <p class="mb-1 border-top"><i class="bi bi-pencil" style="font-size:18px;"></i> @Html.DisplayFor(model => model.Tickets.Status)</p>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group shadow-lg bg-light rounded mt-2">
+                        <div class="row">
+                            <label asp-for="Tickets.Created" class="control-label mb-0 m-1">
+                                <i class="bi bi-people" style="font-size:18px;"></i> Date Created
+                            </label>
+                            <div class="col text-dark font-weight-bold m-1">
+
+                                <p class="mb-1 border-top"><i class="bi bi-pencil" style="font-size:18px;"></i> @Html.DisplayFor(model => model.Tickets.Created)</p>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+   
+
+                    <div class="form-group shadow-lg bg-light rounded mt-2">
+                        <div class="row">
+                            <label asp-for="Tickets.Assign" class="control-label mb-0 m-1">
+                                <i class="bi bi-people" style="font-size:18px;"></i> Assign To
+                            </label>
+                            <div class="col text-dark font-weight-bold m-1">
+
+                                <p class="mb-1 border-top"><i class="bi bi-pencil" style="font-size:18px;"></i> @Html.DisplayFor(model => model.Tickets.Assign.Name)</p>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group shadow-lg bg-light rounded mt-2">
+                        <div class="row">
+                            <label asp-for="Tickets.CustomerId" class="control-label mb-0 m-1">
+                                <i class="bi bi-people" style="font-size:18px;"></i> Customer
+                            </label>
+                            <div class="col text-dark font-weight-bold m-1">
+
+                                <p class="mb-1 border-top"><i class="bi bi-pencil" style="font-size:18px;"></i> @Html.DisplayFor(model => model.Tickets.Customer.Name)</p>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="form-group shadow-lg bg-light rounded mt-2">
+                        <div class="row">
+                            <label asp-for="Tickets.ProjectId" class="control-label mb-0 m-1">
+                                <i class="bi bi-people" style="font-size:18px;"></i> Project Name
+                            </label>
+                            <div class="col text-dark font-weight-bold m-1">
+
+                                <p class="mb-1 border-top"><i class="bi bi-pencil" style="font-size:18px;"></i> @Html.DisplayFor(model => model.Tickets.Project.Name)</p>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group shadow-lg bg-light rounded mt-2">
+                        <div class="row">
+                            <label asp-for="Tickets.ResellerId" class="control-label mb-0 m-1">
+                                <i class="bi bi-people" style="font-size:18px;"></i> Reseller
+                            </label>
+                            <div class="col text-dark font-weight-bold m-1">
+
+                                <p class="mb-1 border-top"><i class="bi bi-pencil" style="font-size:18px;"></i> @Html.DisplayFor(model => model.Tickets.Reseller.Name)</p>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+               
+                    <div class="form-group shadow-lg bg-light rounded mt-2">
+                        <div class="row">
+                            <label asp-for="Tickets.file" class="control-label mb-0 m-1">
+                                <i class="bi bi-people" style="font-size:18px;"></i> File Attachments
+                            </label>
+                            <div class="col text-dark font-weight-bold m-1">
+
+                                <p class="mb-1 border-top"><i class="bi bi-pencil" style="font-size:18px;"></i> @Html.DisplayFor(model => model.Tickets.file)</p>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        <div class="modal-footer">
+        </div>
+
+<script>
+    function writeNote() {
+        document.querySelector('.js-input').innerHTML = `<div class="shadow-lg bg-light rounded mt-3"> <textarea rows="3" class="col-md-12 js-text"></textarea><button Onclick="SaveNow();">Save</button></div>`;
+    }
+
+
+    function SaveNow() {
+       const data = document.querySelector('.js-text'); 
+
+        let da = data.value;
+        
+        document.querySelector('.js-save').innerHTML = `<div class="shadow-lg bg-light rounded mt-3">${da}</div>`;
+    }
+
+ 
+</script>
+
+
+
+
+
+
+

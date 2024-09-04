@@ -1,0 +1,136 @@
+﻿@model CallLogTicketing.ViewModels.TicketsViewModel
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+@*             <th>Assign</th>
+            <th>Customer</th>
+            <th>Description</th>
+            <th>File</th>
+            <th>TicketType</th> *@
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ticketsL)
+        {
+          
+            <tr>
+@*                 <td>@item.Assign.Name</td>
+                <td>@item.Customer.Name</td>
+                <td>@item.Description</td>
+                <td>@item.file</td>
+                <td>@item.TicketType.Name</td> *@
+
+                
+               
+                <div class="card row mt-1">
+                    <a asp-action="Details" asp-route-id="@item.Id" class="card-link">
+
+                    <h6 class="card-header">
+                        <div class="row">
+                            <div class="col-7">
+                                <svg class="bi iconbutton mb-1" width="20" height="20" fill="currentColor">
+                                    <use xlink:href="\lib\bootstrap-icons\bootstrap-icons.svg#people-fill" />
+                                </svg>
+                                @Html.DisplayFor(modelItem => item.Customer.Name)
+                            </div>
+                            <div class="col float-right">
+
+                                <span>REF: </span> @Html.DisplayFor(modelItem => item.Id)
+
+                            </div>
+                        </div>
+                    </h6>
+
+                    <div class="card-body pt-0">
+                        <div class="row">
+                            <div class="col-5">
+                                <div class="row">
+                                    <div class="col-5">Name : @Html.DisplayFor(modelItem => item.Customer.Name) </div>
+
+                                </div>
+                            </div>
+                            <div class="col-6">TicketType : @Html.DisplayFor(modelItem => item.TicketType.Name)</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5">Assign : @Html.DisplayFor(modelItem => item.Assign.Name) </div>
+                            <div class="col-6">Description : @Html.DisplayFor(modelItem => item.Description) </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5"> Another next Col 5</div>
+                            <div class="col-6"> Another next Col 6</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5"> Another next Col 5</div>
+                            <div class="col-6"> Another next Col 6</div>
+                        </div>
+                        <div class="row">
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a>
+
+                             <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>                              
+                        </div>
+
+                      @*  ------------------------------- Bootstrap Pop up for edit -- Starts--------------- *@
+                        <div class="row">
+
+                                <button type="button" class="btn btn-primary" onclick="loadEditForm(@item.Id)">
+                                    Edit
+                                </button>
+
+
+                                <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Edit Ticket</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- Edit form will be loaded here -->
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                          
+                        </div>
+                       @*  ------------------------------- Bootstrap Pop up for edit -------Ends------------ *@
+
+
+
+                    </div>
+                    </a>
+
+                </div>
+             
+                
+            </tr>
+      
+           
+        }
+
+
+    </tbody>
+</table>
+
+<script>
+   
+    // ------------------------------Below For Ajax Call for EDIT--------------------- 
+    function loadEditForm(id) {
+
+        $.ajax({
+            url: '/Home/Edit/' + id,
+            type: 'GET',
+            // data: model,
+            success: function (data) {
+                $('#editModal .modal-body').html(data);
+                $('#editModal').modal('show');
+            }
+        });
+    }
+</script>

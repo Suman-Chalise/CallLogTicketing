@@ -1,0 +1,33 @@
+﻿@model CallLogTicketing.ViewModels.TicketsViewModel
+
+
+
+<h2>List of Tickets</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Assign</th>
+            <th>Customer</th>
+            <th>Description</th>
+            <th>File</th>
+            <th>TicketType</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ticketsL)
+        {
+            <tr>
+                <td>@item.Assign</td>
+                <td>@item.Customer</td>
+                <td>@item.Description</td>
+                <td>@item.file</td>
+                <td>@item.TicketType</td>
+
+            </tr>
+
+        }
+
+
+    </tbody>
+</table>

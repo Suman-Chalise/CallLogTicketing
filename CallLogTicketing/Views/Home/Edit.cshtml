@@ -1,0 +1,130 @@
+﻿@using CallLogTicketing.Enum
+@model CallLogTicketing.ViewModels.TicketsViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Tickets</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Tickets.Id" />
+
+
+                                <div class="form-group">
+                                    <label asp-for="Tickets.Subject" class="control-label"></label>
+                                    <input asp-for="Tickets.Subject" class="form-control" required />
+                                    <span asp-validation-for="Tickets.Subject" class="text-danger"></span>
+                                </div>
+                                 <div class="form-group">
+                              
+                                    <label asp-for="Tickets.Description" class="control-label"></label>
+                                    <textarea asp-for="Tickets.Description" class="form-control" rows="3" required></textarea>
+                                    @*  <input asp-for="Tickets.Description" class="form-control" required /> *@
+                                   
+                                </div> 
+                                <div class="form-group">
+                                    <label asp-for="Tickets.TicketTypeId" class="control-label">Ticket Type</label>
+                                    <select asp-for="Tickets.TicketTypeId" class="form-control form-select" required>
+                                        <option></option>
+                                        @foreach (var item in Model.ticketTypeL)
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+                                    </select>
+
+
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Tickets.Priority" class="control-label"></label>
+                                    <select asp-for="Tickets.Priority" class="form-select" asp-items="@Html.GetEnumSelectList<Priority>();" required>
+                                        <option></option>
+
+                                    </select>
+
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Tickets.Status" class="control-label"></label>
+                                    <select asp-for="Tickets.Status" class="form-select" asp-items="@Html.GetEnumSelectList<Status>();" required>
+                                        <option></option>
+
+                                    </select>
+
+                                </div>
+
+                        
+                            <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Tickets.Assign" class="control-label"></label>
+                                <select asp-for="Tickets.AssignId" class="form-control form-select" required>
+                                    <option></option>
+                                    @foreach (var item in Model.assignL)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+
+                                </select>
+
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Tickets.CustomerId" class="control-label">Customer</label>
+                                <select asp-for="Tickets.CustomerId" class="form-control form-select" required>
+                                    <option></option>
+                                    @foreach (var item in Model.CustomersL)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                </select>
+
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Tickets.ProjectId" class="control-label">Project Type</label>
+                                <select asp-for="Tickets.ProjectId" class="form-control form-select" required>
+                                    <option></option>
+                                    @foreach (var item in Model.projectsL)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Tickets.ResellerId" class="control-label">Reseller</label>
+                                <select asp-for="Tickets.ResellerId" class="form-control form-select" required>
+                                    <option></option>
+                                    @foreach (var item in Model.resellersL)
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Tickets.file" class="control-label"></label>
+                                <input asp-for="Tickets.file" class="form-control" />
+
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Tickets.Created" class="control-label"></label>
+                                <input asp-for="Tickets.Created" class="form-control" type="date" />
+
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
+                </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,144 @@
+﻿@using CallLogTicketing.Enum
+@model CallLogTicketing.ViewModels.TicketsViewModel
+
+<div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Create Ticket</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+    <form id="createTicketForm" asp-action="Create">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Tickets.Subject" class="control-label"></label>
+                        <input asp-for="Tickets.Subject" class="form-control" required />
+                        <span asp-validation-for="Tickets.Subject" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Tickets.Description" class="control-label"></label>
+                        <textarea asp-for="Tickets.Description" class="form-control" rows="3" required></textarea>
+                       @*  <input asp-for="Tickets.Description" class="form-control" required /> *@
+                        <span asp-validation-for="Tickets.Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Tickets.TicketTypeId" class="control-label">Ticket Type</label>
+                        <select asp-for="Tickets.TicketTypeId" class="form-control form-select" required>
+                            <option></option>
+                            @foreach (var item in Model.ticketTypeL)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+                        
+                        
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Tickets.Priority" class="control-label"></label>
+                        <select asp-for="Tickets.Priority" class="form-select" asp-items="@Html.GetEnumSelectList<Priority>();" required>
+                            <option></option>
+                           
+                        </select>
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Tickets.Status" class="control-label"></label>
+                        <select asp-for="Tickets.Status" class="form-select" asp-items="@Html.GetEnumSelectList<Status>();" required>
+                            <option></option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+                <!-- One col 6 finishes and another starts-->
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Tickets.Assign" class="control-label"></label>
+                        <select asp-for="Tickets.AssignId" class="form-control form-select" required>
+                            <option></option>
+                            @foreach (var item in Model.assignL)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+
+                        </select>
+                      
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Tickets.CustomerId" class="control-label">Customer</label>
+                        <select asp-for="Tickets.CustomerId" class="form-control form-select" required>
+                            <option></option>
+                            @foreach (var item in Model.CustomersL)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+                       
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Tickets.ProjectId" class="control-label">Project Type</label>
+                        <select asp-for="Tickets.ProjectId" class="form-control form-select" required>
+                                <option></option>
+                                @foreach (var item in Model.projectsL)
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Tickets.ResellerId" class="control-label">Reseller</label>
+                        <select asp-for="Tickets.ResellerId" class="form-control form-select" required>
+                            <option></option>
+                            @foreach (var item in Model.resellersL)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Tickets.file" class="control-label"></label>
+                        <input asp-for="Tickets.file" class="form-control"/>
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Tickets.Created" class="control-label"></label>
+                        <input asp-for="Tickets.Created" class="form-control" type="date" />
+
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <input type="submit" value="Create" class="btn btn-primary"/>
+
+        </div>
+
+    </form>
+
+</div>
+
+<script>
+    $(function () {
+        // Handle form submission event
+        $('#createTicketForm').on('submit', function (event) {
+            // Check conditions to determine if certain fields should be required
+            if (/* Condition */) {
+                // Add 'required' attribute to the fields that should be required
+                $('#fileInput').attr('required', 'required');
+                $('#createdInput').attr('required', 'required');
+            } else {
+                // Remove 'required' attribute from the fields that are not required
+                $('#fileInput').removeAttr('required');
+                $('#createdInput').removeAttr('required');
+            }
+        });
+    });
+</script>
+                
+
